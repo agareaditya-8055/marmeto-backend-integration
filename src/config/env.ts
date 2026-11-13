@@ -20,6 +20,14 @@ const envSchema = z.object({
   DB_DATABASE: z.string().min(1),
 
   SHOPIFY_WEBHOOK_SECRET: z.string().min(1),
+
+  REDIS_URL: z
+  .string()
+  .url()
+  .refine((value) => value.startsWith("rediss://"), {
+    message: "REDIS_URL must use a secure rediss:// connection",
+  }),
+  ADMIN_API_KEY: z.string().min(32),
 });
 
 // Validate environment variables
